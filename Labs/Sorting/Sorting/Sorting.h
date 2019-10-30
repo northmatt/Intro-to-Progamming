@@ -12,4 +12,4 @@ void SortS(string inArray[], unsigned int size);
 //least to largest
 void SortI(int inArray[], unsigned int size);
 //a - z
-void SortC(const char *test[], unsigned int size);
+void SortC(char inArray[], unsigned int size);
