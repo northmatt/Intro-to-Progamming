@@ -1,11 +1,10 @@
 // LargeINT.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include <iostream>
-
 #include "LargeINT.h"
 
 LargeINT::LargeINT(vector<int> vec) {
+	vec = Cleanup(vec);
 	num = vec;
 }
 
@@ -14,7 +13,12 @@ LargeINT LargeINT::Add(LargeINT large2) {
 	vector<int> num2;
 
 	num2 = large2.GetNum();
-	
+
+	if (num2[0] < 0) {
+		num2[0] *= -1;
+		return Subract(num2);
+	}
+
 	//simply add all digits together from both vectors
 	if (num.size() < num2.size()) {
 		outNum = num2;
@@ -35,7 +39,7 @@ LargeINT LargeINT::Add(LargeINT large2) {
 				outNum[i] = num[i];
 		}
 	}
-	
+
 	//deal with carrying for all ints but largest decimal place
 	int carryIn{ 0 };
 	for (unsigned int i = outNum.size(); i > 0; i--) {
@@ -45,17 +49,91 @@ LargeINT LargeINT::Add(LargeINT large2) {
 		outNum[pos] += carryIn;
 
 		carryIn = outNum[pos] / 10;
+
+		if (-9 <= outNum[pos] && outNum[pos] <= -1)
+			carryIn -= 1;
+
 		outNum[pos] -= carryIn * 10;
 	}
 
-	if (carryIn > 0)
+	if (carryIn != 0)
 		outNum.insert(outNum.begin(), carryIn);
+
+	outNum = Cleanup(outNum);
 
 	return outNum;
 }
 
-LargeINT LargeINT::Subract(LargeINT num2) {
-	return LargeINT({0});
+LargeINT LargeINT::Subract(LargeINT large2) {
+	vector<int> outNum;
+	vector<int> num2;
+	bool isNegative{ false };
+
+	num2 = large2.GetNum();
+
+	if (num2.size() > num.size() && num2[0] > 0 || num2.size() == num.size() && num2[0] > num[0]) {
+		outNum = num;
+		
+		num = num2;
+		num2 = outNum;
+
+		isNegative = true;
+	}
+
+	//simply add all digits together from both vectors
+	if (num.size() < num2.size()) {
+		outNum = num2;
+
+		for (unsigned int i = 0; i < num2.size(); i++) {
+			if (i >= num2.size() - num.size())
+				outNum[i] = num[i - (num2.size() - num.size())] - num2[i];
+			else
+				outNum[i] = num2[i];
+		}
+	} else {
+		outNum = num;
+
+		for (unsigned int i = 0; i < num.size(); i++) {
+			if (i >= num.size() - num2.size())
+				outNum[i] = num[i] - num2[i - (num.size() - num2.size())];
+			else
+				outNum[i] = num[i];
+		}
+	}
+
+	//deal with carrying for all ints but largest decimal place
+	int carryIn{ 0 };
+	for (unsigned int i = outNum.size(); i > 0; i--) {
+		unsigned int pos{ 0 };
+		pos = i - 1;
+
+		outNum[pos] += carryIn;
+
+		carryIn = outNum[pos] / 10;
+
+		if (-9 <= outNum[pos] && outNum[pos] <= -1)
+			carryIn -= 1;
+
+		outNum[pos] -= carryIn * 10;
+	}
+
+	if (carryIn != 0)
+		outNum.insert(outNum.begin(), carryIn);
+
+	outNum = Cleanup(outNum);
+
+	if (isNegative)
+		outNum[0] *= -1;
+
+	return outNum;
+}
+
+vector<int> LargeINT::Cleanup(vector<int> vec) {
+	while (vec[0] == 0) {
+		vec.erase(vec.begin());
+	}
+
+	return vec;
 }
 
 vector<int> LargeINT::GetNum() {
@@ -66,7 +144,7 @@ string LargeINT::GetNumString() {
 	string outNum = "";
 	
 	for (int currentNum : num) {
-		outNum += to_string(currentNum) + " ";
+		outNum += to_string(currentNum);
 	}
 
 	return outNum;

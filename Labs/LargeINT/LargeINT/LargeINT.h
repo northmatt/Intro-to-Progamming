@@ -13,6 +13,8 @@ public:
 
 	LargeINT Add(LargeINT num2);
 	LargeINT Subract(LargeINT num2);
+	vector<int> Cleanup(vector<int> vec);
+
 	vector<int> GetNum();
 	string GetNumString();
 private:
