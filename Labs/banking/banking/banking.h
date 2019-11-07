@@ -17,8 +17,8 @@ public:
 		double limit;
 	};
 
-	void AddAccount(string name, double amount, double limit);
-	void Transfer(string fromAccount, string toAccount, double amount);
+	string AddAccount(string name, double amount, double limit);
+	string Transfer(string fromAccount, string toAccount, double amount);
 	string GetInfo(string name);
 	int FindAccount(string name);
 private:

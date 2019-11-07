@@ -71,7 +71,19 @@ LargeINT LargeINT::Subract(LargeINT large2) {
 
 	num2 = large2.GetNum();
 
-	if (num2.size() > num.size() && num2[0] > 0 || num2.size() == num.size() && num2[0] > num[0]) {
+	if (num2[0] < 0) {
+		num2[0] *= -1;
+		return Add(num2);
+	}
+
+	if (num2.size() == num.size())
+		for (unsigned int i = 0; i < num.size(); i++)
+			if (num2[i] > num[i]) {
+				isNegative = true;
+				break;
+			}
+
+	if (num2.size() > num.size() && num2[0] > 0 || isNegative) {
 		outNum = num;
 		
 		num = num2;
@@ -80,22 +92,23 @@ LargeINT LargeINT::Subract(LargeINT large2) {
 		isNegative = true;
 	}
 
+	int negNum = num[0] / abs(num[0]);
 	//simply add all digits together from both vectors
 	if (num.size() < num2.size()) {
 		outNum = num2;
 
 		for (unsigned int i = 0; i < num2.size(); i++) {
 			if (i >= num2.size() - num.size())
-				outNum[i] = num[i - (num2.size() - num.size())] - num2[i];
+				outNum[i] = num[i - (num2.size() - num.size())] - num2[i] * negNum;
 			else
-				outNum[i] = num2[i];
+				outNum[i] = -num2[i] * negNum;
 		}
 	} else {
 		outNum = num;
 
 		for (unsigned int i = 0; i < num.size(); i++) {
 			if (i >= num.size() - num2.size())
-				outNum[i] = num[i] - num2[i - (num.size() - num2.size())];
+				outNum[i] = num[i] - num2[i - (num.size() - num2.size())] * negNum;
 			else
 				outNum[i] = num[i];
 		}
