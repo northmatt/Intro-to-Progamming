@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <math.h>
 
 #include <iostream>
 
@@ -12,6 +13,7 @@ using std::to_string;
 class LargeINT {
 public:
 	LargeINT(vector<int> vec);
+	LargeINT(int num);
 
 	LargeINT Add(LargeINT num2);
 	LargeINT Subract(LargeINT num2);
