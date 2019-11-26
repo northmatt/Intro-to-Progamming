@@ -8,6 +8,21 @@ using std::endl;
 using std::rand;
 
 int main() {
+	int start[]{ 1, 46 };
+	int size[]{ 107, -45 };
+	int jump[]{ 0, 47 };
+	size_t amount{ 12 };
+
+	for (size_t i = 0; i < amount; i++)
+		cout << "anim.AddFrame(vec2(" << start[0] + jump[0] * i << ".f, " << start[1] + jump[1] * i << ".f), vec2(" << start[0] + size[0] + jump[0] * i << ".f, " << start[1] + size[1] + jump[1] * i << ".f));\n";
+
+	cout << "\n";
+
+	for (size_t i = 0; i < amount; i++)
+		cout << start[0] + jump[0] * i << " " << start[1] + jump[1] * i << " " << start[0] + size[0] + jump[0] * i << " " << start[1] + size[1] + jump[1] * i << "\n";
+
+	cout << "\n";
+
 	srand(time(0));
 	//int sorting
 	cout << "Before:\n";

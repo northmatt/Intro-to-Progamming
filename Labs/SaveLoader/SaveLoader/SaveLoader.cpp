@@ -20,7 +20,7 @@ string save(string fileName, string toSave) {
 	if (!theFile.is_open())
 		return "Can't create file";
 
-	theFile << toSave;
+	theFile << toSave.c_str();
 
 	theFile.close();
 	return "Saved File";
