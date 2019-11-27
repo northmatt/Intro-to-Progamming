@@ -31,9 +31,9 @@ unsigned int Recursion::Sum(unsigned int num) {
 }
 
 bool Recursion::isPrime(unsigned int num) {
-	//all prime number for the exception of 2/3 are a factor of 6 +/- 1
-	//also for a multiple table for 24 as an example -- 24: 1,2,3,4,6,8,12,24
-	//you dont need to go past the number sqrt(24) -> 4.9 -> 4 as you already seen 1,2,3,4 which are multiples of 24. 
+	//All prime number for the exception of 2/3 are a factor of 6 +/- 1.
+	//*side note* also for a multiple table for 24 as an example -- 24: 1,2,3,4,6,8,12,24
+	//You don't need to go past the number sqrt(24) -> 4.9 -> 4 as you have already seen 1,2,3,4 which are multiples of 24. 
 	//So with that you already know about 6,8,12,24 existing
 	unsigned int square = sqrt(num);
 
